@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block titulo %}
+<title>Contacto</title>
+{% endblock %}
+{% block navegacion %}
+{% include 'navegacion.html' %}
+{% endblock %}
+{% block contenido %}
+
+<head>
+    <title>Contacto</title>
+    </head>
+<body>
+    <div class="contact-message">
+        <p>Si tienes alguna duda o quieres participar como colaborador, puedes enviarme un mail o buscarme en mis redes sociales!</p>
+    </div>
+    <div class="contact-links">
+        <a href="mailto:guido.fuensalida@gmail.com" class="gmail">Gmail</a>
+        <a href="https://www.facebook.com/guido.fuensalida/" class="facebook">Facebook</a>
+        <a href="https://www.instagram.com/guidofuensalida?igsh=ZjNkemNzNW8zeWoy" class="instagram">Instagram</a>
+    </div>
+</body>
+</html>
+
+{% endblock %}

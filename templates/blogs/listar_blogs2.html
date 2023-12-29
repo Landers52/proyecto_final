@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}
+<title>Pagina principal </title>
+{% endblock %}
+
+{% block navegacion %}
+{% include 'navegacion.html' %}
+{% endblock %}
+
+{% block contenido %}
+
+<form method="GET" action="{% url 'apps.blogs:ordenar_por' %}" class="row g-2 align-items-center" style="margin-top: 1%;">
+    <div class="col-auto">
+        <select name="orden" class="form-select btn-secondary">
+            <option value="fecha_asc">Ordenar por fecha (antiguo)</option>
+            <option value="fecha_desc">Ordenar por fecha (reciente)</option>
+            <option value="titulo_asc">Ordenar por título A-Z</option>
+            <option value="titulo_desc">Ordenar por título Z-A</option>        
+        </select>
+    </div>
+    <div class="col-auto">
+        <button class="btn btn-primary" type="submit">Ordenar</button>
+    </div>
+    <div class="col-auto">
+        <a href="{% url 'apps.blogs:listar_categorias' %}" class="btn btn-primary" role="button">Volver a categorías</a>
+    </div>
+</form>
+
+
+<div class="row" style="margin-top: 2%;">
+    {% for p in blogs %}
+    <div class="col-md-3 mb-3"> 
+        <div class="card shadow-lg" style="border-radius: 15px;">
+            <div class="card-img-top">
+                <img src="{{ p.imagen.url }}" class="card-img-top rounded-top" alt="{{p.titulo}}" style="height: 250px; object-fit: cover;">
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">{{p.titulo}}</h5>
+                <p style='text-align: center;' class="mbr-timeline-date"><small class="text-body-secondary">{{p.fecha_agregado}}</small></p>
+                <p class="card-text">{{p.texto | slice:200}}</p>
+                <a href="{% url 'apps.blogs:detalle_blog' p.pk %}" class="btn btn-primary" style="font-size: small;">Leer más</a>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Categoria: <img src="{{p.categoria.imagen.url}}" alt="categ" width="50" height="50" class="rounded-circle flex-shrink-0"> {{p.categoria}}</li>
+                <li class="list-group-item">Agregado por: <img src="{{p.colaborador.imagen.url}}" alt="perfil" width="50" height="50" class="rounded-circle flex-shrink-0"> {{p.colaborador}}</li>
+            </ul>
+        </div>
+    </div>
+    {% endfor %}    
+</div>
+
+
+{% endblock %}

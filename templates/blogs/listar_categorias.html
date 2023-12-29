@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}
+<title>Categorias</title>
+{% endblock %}
+
+{% block navegacion %}
+{% include 'navegacion.html' %}
+{% endblock %}
+
+{% block contenido %}
+
+<form method="GET" action="{% url 'apps.blogs:ordenar_por' %}" class="row g-2 align-items-center" style="margin-top: 1%;">
+    <div class="col-auto">
+        <select name="orden" class="form-select btn-secondary">
+            <option value="fecha_asc">Ordenar por fecha (antiguo)</option>
+            <option value="fecha_desc">Ordenar por fecha (reciente)</option>
+            <option value="titulo_asc">Ordenar por título A-Z</option>
+            <option value="titulo_desc">Ordenar por título Z-A</option>        
+        </select>
+    </div>
+    <div class="col-auto">
+        <button class="btn btn-primary" type="submit">Ordenar</button>
+    </div>
+
+</form>
+<section data-bs-version="5.1" class="timeline3 cid-tf4QbpyVP7" id="timeline3-o">
+    {% if blogs %}
+    <div class="container-fluid" style="margin-top: 2%">
+        <div class="mbr-section-head">
+            <h3 class="mbr-section-title mbr-fonts-style align-center mb-0 display-2" style="text-align: center;">
+                <strong>Categorias</strong>
+            </h3>
+        </div>
+        <div class="row" style="margin-bottom: 2%; margin-top: 2%;">
+            {% for p in categorias %}
+            <div class="col-md-4 mb-3">
+                <div class="card" style="text-align: center;">
+                    <div class="card-img-top" style="display: block; width: 70%; margin: auto;">
+                        <img src="{{ p.imagen.url }}" class="card-img-top w-50" alt="{{p.nombre}}">
+                    </div>
+
+                    <div class="card-body">
+                        <h5 class="card-title">{{p.nombre}}</h5>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        {% for i in blogs %}
+                        {% if i.categoria.nombre == p.nombre %}
+                        <li class="list-group-item"><a
+                                href="{% url 'apps.blogs:detalle_blog' i.pk %}">{{i.titulo}}</a></li>
+                        {% endif %}{% endfor %}
+                    </ul>
+                </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

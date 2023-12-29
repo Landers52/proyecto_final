@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}
+<title>Pagina principal </title>
+{% endblock %}
+
+{% block navegacion %}
+{% include 'navegacion.html' %}
+{% endblock %}
+
+{% block contenido %}
+
+<div class="mbr-section-head">
+    <h3 class="mbr-section-title mbr-fonts-style align-center mb-0 display-2" style="text-align: center;">
+        {% if search_query %}
+        {% if blogs_found %}
+        <strong>Blogs encontrados para '{{ search_query }}'</strong>
+        {% else %}
+        <strong>No se encontró nada para '{{ search_query }}'</strong>
+        {% endif %}
+        {% else %}
+        <strong>Las últimas entradas a nuestro blog!</strong>
+        {% endif %}
+        
+    </h3>
+</div>
+<div id="blogCarousel" class="carousel slide" data-bs-ride="carousel" style="margin-top: 3%;">
+    <div class="carousel-inner">
+        {% for p in blogs %}
+        <div class="carousel-item {% if forloop.first %}active{% endif %} ">
+            <div class="col-md-4 mx-auto mb-3"> 
+                <div class="card shadow-lg" style="border-radius: 15px;">
+                    <div class="card-img-top" style="display: block; width: 70%; margin: auto;">
+                        <img src="{{ p.imagen.url }}" class="card-img-top rounded-top" alt="{{p.titulo}}"
+                            style="width: 100%; height: 250px; object-fit: cover;">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{p.titulo}}</h5>
+                        <p style='text-align: center;' class="mbr-timeline-date "><small
+                                class="text-body-secondary">{{p.fecha_agregado}}</small></p>
+                        <p class="card-text">{{p.texto | slice:200}}</p>
+                    </div>
+                    <div class="card-body">
+                        <a href="{% url 'apps.blogs:detalle_blog' p.pk %}" class="btn btn-primary"
+                            style="font-size: small;">Leer más</a>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Categoria: <img src="{{p.categoria.imagen.url}}" alt="categ"
+                                width="50" height="50" class="rounded-circle flex-shrink-0"> {{p.categoria}}</li>
+                        <li class="list-group-item">Agregado por: <img src="{{user.imagen.url}}" alt="perfil" width="50"
+                                height="50" class="rounded-circle flex-shrink-0"> {{p.colaborador}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#blogCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#blogCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        
+        var myCarousel = new bootstrap.Carousel(document.getElementById('blogCarousel'), {
+            interval: 3000, 
+            wrap: true 
+        });
+    });
+</script>
+
+{% endblock %}

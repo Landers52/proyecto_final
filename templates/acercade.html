@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block titulo %}
+<title>Acerca de</title>
+{% endblock %}
+{% block navegacion %}
+{% include 'navegacion.html' %}
+{% endblock %}
+{% block contenido %}
+
+<head>
+    <title>Acerca de</title>    
+</head>
+<body>
+    <div class="about-content">
+        <div class="about-text">
+            <h1>Sobre esta página</h1>
+            <p class="about-description">
+                Este proyecto fue hecho como una primera experiencia en el mundo de la programación web, y está pensado para ayudar a cualquiera que quiera comenzar a dar
+                sus primeros pasos en este mundo tan desafiente y gratificante como lo es la programación. <br>
+                Toda la información que puedas encontrar aquí fue incluida con el propósito de ayudarte en tu camino de aprendizaje como una herramienta más, así como
+                nosotros también las utilizamos para poder crear esta humilde -pero simpática- página web. <br>
+                <strong>Gracias a nuestra profe Ceci por su buena onda, predisposición y *ruidos de mate*</strong>
+            </p>
+        </div>
+    </div>
+</body>
+</html>
+{% endblock %}
+
